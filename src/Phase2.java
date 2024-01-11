@@ -1,34 +1,19 @@
-import classes.Etudiant;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import MainPackage.Main;
+
 import classes.Departement;
 import classes.Enseignant;
-import classes.Etudiant;
-import classes.Filiere;
-import controllers.EnseignantController;
-import controllers.EtudiantController;
-import services.*;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 
-
-
-public class MyJdbc {
+public class Phase2 {
 
 
     public class main
     {
         public static void main(String[] args)
         {
-            String dburl="jdbc:mysql://localhost:3306/syst_gest_educat";
+            String dburl="jdbc:mysql://localhost:3306/prjjava";
             String username="root";
             String password="";
             try
@@ -104,13 +89,13 @@ public class MyJdbc {
 
             String query="INSERT INTO departement(id,nom,enseignant) values(?,?,?)";
             PreparedStatement ps=cx.prepareStatement(query);
-            ps.setInt(1, Departement.getDept_id());
-            ps.setString(2,departement.getNom());
-            ps.setInt(3,departement.getResponsable().getId());
+            ps.setInt(1, departement.getId());
+            ps.setString(2,departement.getIntitule());
+            ps.setInt(3,departement.getChef().getId());
 
 
             ps.executeUpdate();
-           Departement.add(departement);
+
         }
         public static void supprimerDept(int id,Connection cx) throws SQLException
         {
@@ -133,10 +118,7 @@ public class MyJdbc {
                 int idensg=r.getInt("enseignant");
                 String nom=r.getString("nom");
 
-                Enseignant enseignant = EtudiantServices.getEnsById(id);
-                Departement departement = new Departement(nom,enseignant);
-                // configuration.departements.add(departement);
-                departements.add(departement);
+
             }
 
 
@@ -162,16 +144,15 @@ public class MyJdbc {
 
             String query="INSERT INTO enseignant(idens,nom,prenom,email,grade) values(?,?,?,?,?)";
             PreparedStatement ps=cx.prepareStatement(query);
-            ps.setInt(1, Enseignant.getEnsg_id());
-            ps.setString(2,Enseignant.getNom());
-            ps.setString(3,Enseignant.getPrenom());
+
+
 
             ps.setString(4,enseignant.getEmail());
             ps.setString(5,enseignant.getGrade());
 
 
             ps.executeUpdate();
-          Enseignant.add(enseignant);
+
         }
         public static void supprimerEnsg(int id,Connection cx) throws SQLException
         {
@@ -193,9 +174,7 @@ public class MyJdbc {
 
             while (r.next()) {
 
-                Enseignant enseignant = new Enseignant(r.getInt("id"), r.getString("nom"), r.getString("prenom"), r.getString("email"), r.getString("grade"));
-               enseignants.add(enseignant);
-                enseignants.add(enseignant);
+
 
             }
 
